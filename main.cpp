@@ -340,7 +340,7 @@ void Tres_5()
     int n,i,j,aux;
     int array[0];
     int *array_dinamica=NULL;
-    printf("Por Favor digite el tamaño del arreglo: ");
+    printf("Por Favor digite el tamaÃ±o del arreglo: ");
     scanf("%i",&n);
     array_dinamica= new int[n];
     for(i=0;i<n;i++)
@@ -898,16 +898,16 @@ void Cuatro_4()
         scanf("%s",&Mi_Estudiante[i]->sexo);
         fflush(stdin);
         printf("Digite Nota 1: ");
-        scanf("%i",&Mi_Estudiante[i]->Students_1.nota1);
+        scanf("%i",&Mi_Estudiante[i].Students_1->nota1);
         fflush(stdin);
         printf("Digite Nota 2: ");
-        scanf("%i",&Mi_Estudiante[i]->Students_1.nota2);
+        scanf("%i",&Mi_Estudiante[i].Students_1->nota2);
         fflush(stdin);
         printf("Digite Nota 3: ");
-        scanf("%i",&Mi_Estudiante[i]->Students_1.nota3);
+        scanf("%i",&Mi_Estudiante[i].Students_1->nota3);
         fflush(stdin);
-        Mi_Estudiante[i]->Students_1.promedio=(Mi_Estudiante[i]->Students_1.nota1)+ (Mi_Estudiante[i]->Students_1.nota2)+ (Mi_Estudiante[i]->Students_1.nota3)/3;
-        printf("Promedio del Estudiante: %.2f\n\n",Mi_Estudiante[i]->Students_1.promedio);
+        Mi_Estudiante[i].Students_1->promedio=(Mi_Estudiante[i].Students_1->nota1)+ (Mi_Estudiante[i].Students_1->nota2)+ (Mi_Estudiante[i].Students_1->nota3)/3;
+        printf("Promedio del Estudiante: %.2f\n\n",Mi_Estudiante[i].Students_1->promedio);
         fflush(stdin);
         printf("Informacion Almacenada....");
         getch();
@@ -921,8 +921,8 @@ void Cuatro_4()
         printf("Nombre: %s\n",Mi_Estudiante[i]->nombre);
         printf("Edad: %i\n",Mi_Estudiante[i]->edad);
         printf("Sexo: %s\n",Mi_Estudiante[i]->sexo);
-        printf("Nota 1: %.2f\tNota 2: %.2f\tNota 3: %.2f\n",Mi_Estudiante[i]->Students_1.nota1,Mi_Estudiante[i]->Students_1.nota2,Mi_Estudiante[i]->Students_1.nota3);
-        printf("Promedio: %.2f\n",(Mi_Estudiante[i]->Students_1.promedio));
+        printf("Nota 1: %.2f\tNota 2: %.2f\tNota 3: %.2f\n",Mi_Estudiante[i].Students_1->nota1,Mi_Estudiante[i].Students_1->nota2,Mi_Estudiante[i].Students_1->nota3);
+        printf("Promedio: %.2f\n",(Mi_Estudiante[i].Students_1->promedio));
         printf("\n\nContinuar...");
         getch();
         system("cls");
