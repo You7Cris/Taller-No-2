@@ -535,7 +535,7 @@ void Tres_10()
         for(j=0;j<m;j++)
         {
             P_matriz[i][j]= 1 + rand()%((50+1)-1);
-            printf("%i\t",P_matriz[i][j]);
+            printf("%i\t",*(*P_matriz+i)+j);
         }
         printf("\n");
     }
@@ -544,12 +544,15 @@ void Tres_10()
     {
         for(j=0;j<n;j++)
         {
-            printf("%i\t",P_matriz[j][i]);
+            printf("%i\t",*(*(P_matriz+j)+i));
         }
         printf("\n");
     }
-    free(P_matriz);
-    printf("\n\nVolver al menu....");
+    for(i=0;i<n;i++)
+    {
+        delete[](P_matriz);
+    }
+    delete(P_matriz);
     getch();
     system("cls");
     Menu_3();
@@ -613,7 +616,7 @@ struct ciclismo
     int horas;
     int minutos;
     int segundos;
-}*P_structs[0];
+}ciclismo[3],*P_structs=ciclismo;
 
 void Tres_12()
 {
@@ -621,35 +624,34 @@ void Tres_12()
     printf("Ingrese el tiempo de las 3 etapas del circuito\n");
     for(i=0;i<3;i++)
     {
-        P_structs[i]=(struct ciclismo*)malloc(sizeof(struct ciclismo));
         fflush(stdin);
         printf("\n\t\t %i ETAPA\n",i+1);
         printf("Horas: ");
-        scanf("%i",&P_structs[i]->horas);
-        thoras=thoras+P_structs[i]->horas;
+        scanf("%i",&(P_structs+i)->horas);
+        thoras=thoras+(P_structs+i)->horas;
         fflush(stdin);
         printf("Minutos: ");
-        scanf("%i",&P_structs[i]->minutos);
-        if(60<P_structs[i]->minutos)
+        scanf("%i",&(P_structs+i)->minutos);
+        if(60<(P_structs+i)->minutos)
         {
             printf("\n\nError incorrecto..\n");
             i=i-1;
         }
         else
         {
-            tminutos=tminutos+(P_structs[i]->minutos);
+            tminutos=tminutos+(P_structs+i)->minutos;
             fflush(stdin);
             printf("Segundos: ");
-            scanf("%i",&P_structs[i]->segundos);
+            scanf("%i",&(P_structs+i)->segundos);
             fflush(stdin);
-            if(P_structs[i]->segundos>60)
+            if((P_structs+i)->segundos>60)
             {
                 printf("Error incorrecto....\n");
                 i=i-1;
             }
             else
             {
-                tsegundos=tsegundos+(P_structs[i]->segundos);
+                tsegundos=tsegundos+(P_structs+i)->segundos;
                 printf("\n\nInformacion almacenada\n");
             }
         }
@@ -687,7 +689,7 @@ struct Estudiante
     char categoria[20];
 
 
-}*P_Estudiante[0];
+}Estudiante[100],*P_Estudiante= Estudiante;
 
 void Cuatro_1()
 {
@@ -697,28 +699,27 @@ void Cuatro_1()
     printf("Ingrese los datos del competidor\n");
     for(i=0;i<n;i++)
     {
-        P_Estudiante[i]=(struct Estudiante*)malloc(sizeof(struct Estudiante));
         printf("Nombre: ");
-        scanf("%s",&P_Estudiante[i]->nombre);
+        scanf("%s",&(P_Estudiante+i)->nombre);
         fflush(stdin);
         printf("Edad: ");
-        scanf("%i",&P_Estudiante[i]->edad);
+        scanf("%i",&(P_Estudiante+i)->edad);
         fflush(stdin);
         printf("Sexo: ");
-        scanf("%s",&P_Estudiante[i]->sexo);
+        scanf("%s",&(P_Estudiante+i)->sexo);
         fflush(stdin);
         printf("Club: ");
-        scanf("%s",&P_Estudiante[i]->club);
+        scanf("%s",&(P_Estudiante+i)->club);
         fflush(stdin);
-        if(15>=P_Estudiante[i]->edad)
+        if(15>=(P_Estudiante+i)->edad)
         {
-            strcpy(P_Estudiante[i]->categoria,("Infantil"));
-        }else if(30>=P_Estudiante[i]->edad)
+            strcpy((P_Estudiante+i)->categoria,("Infantil"));
+        }else if(30>=(P_Estudiante+i)->edad)
         {
-            strcpy(P_Estudiante[i]->categoria,("Joven"));
+            strcpy((P_Estudiante+i)->categoria,("Joven"));
         }else
         {
-            strcpy(P_Estudiante[i]->categoria,("Mayor"));
+            strcpy((P_Estudiante+i)->categoria,("Mayor"));
         }
         fflush(stdin);
         printf("\n\nInformacion almacenada....");
@@ -728,11 +729,11 @@ void Cuatro_1()
     printf("Mostrar Informacion\n\n");
     for(i=0;i<n;i++)
     {
-        printf("Nombre: %s\n",P_Estudiante[i]->nombre);
-        printf("Edad: %i\n",P_Estudiante[i]->edad);
-        printf("Sexo: %s\n",P_Estudiante[i]->sexo);
-        printf("Club: %s\n",P_Estudiante[i]->club);
-        printf("Categoria: %s\n",P_Estudiante[i]->categoria);
+        printf("Nombre: %s\n",(P_Estudiante+i)->nombre);
+        printf("Edad: %i\n",(P_Estudiante+i)->edad);
+        printf("Sexo: %s\n",(P_Estudiante+i)->sexo);
+        printf("Club: %s\n",(P_Estudiante+i)->club);
+        printf("Categoria: %s\n",(P_Estudiante+i)->categoria);
         printf("\n\n");
         printf("Presiona una tecla para continuar....");
         getch();
@@ -756,7 +757,7 @@ struct Estudiante1
     int edad;
     int grado;
     float promedio;
-}*P_estudiante1[0];
+}Estudiante1[3],*P_estudiante1=Estudiante1;
 
 void Cuatro_2()
 {
@@ -764,23 +765,22 @@ void Cuatro_2()
     printf("Ingrese los datos para cada estudiante\n\n");
     for(i=0;i<3;i++)
     {
-        P_estudiante1[i]=(struct Estudiante1*)malloc(sizeof(struct Estudiante1));
         fflush(stdin);
         printf("Nombre: ");
-        scanf("%s",&P_estudiante1[i]->nombre);
+        fgets((P_estudiante1+i)->nombre,20,stdin);
         fflush(stdin);
         printf("Edad: ");
-        scanf("%i",&P_estudiante1[i]->edad);
+        scanf("%i",&(P_estudiante1+i)->edad);
         fflush(stdin);
         printf("Grado,ingrese numero(Ej: 1,2...): ");
-        scanf("%i",&P_estudiante1[i]->grado);
+        scanf("%i",&(P_estudiante1+i)->grado);
         fflush(stdin);
         printf("Promedio: ");
-        scanf("%f",&P_estudiante1[i]->promedio);
+        scanf("%f",&(P_estudiante1+i)->promedio);
         fflush(stdin);
-        if(P_estudiante1[i]->promedio>mayor)
+        if((P_estudiante1+i)->promedio>mayor)
         {
-                mayor=P_estudiante1[i]->promedio;
+                mayor=(P_estudiante1+i)->promedio;
                 vuelta=i;
         }
         printf("\n\nInformacion Almacenada...");
@@ -789,14 +789,10 @@ void Cuatro_2()
 
     }
     printf("Estudiante con mayor promedio\n");
-    while(vuelta <3){
-             fflush( stdin );
-             printf("\n\t El nombre del estudiante # %i es: %s\n",vuelta+1,P_estudiante1[vuelta]->nombre);
-             printf("\nLa edad: %d\n",P_estudiante1[vuelta]->edad);
-             printf("\nEl grado: %d\n",P_estudiante1[vuelta]->grado);
-             printf("\nEl promedio: %.2f\n",P_estudiante1[vuelta]->promedio);
-             vuelta++;
-    }
+    printf("\n\t El nombre del estudiante # %i es: %s\n",vuelta+1,(P_estudiante1+vuelta)->nombre);
+    printf("\nLa edad: %d\n",(P_estudiante1+vuelta)->edad);
+    printf("\nEl grado: %d\n",(P_estudiante1+vuelta)->grado);
+    printf("\nEl promedio: %.2f\n",(P_estudiante1+vuelta)->promedio);
     free(P_estudiante1);
     delete(P_estudiante1);
     printf("\n\nVolver al Menu....");
@@ -808,7 +804,7 @@ void Cuatro_2()
 struct trabajador
 {
     float salario;
-}*P_trabajador[0];
+}trabajador[100],*P_trabajador=trabajador;
 
 void Cuatro_3()
 {
@@ -820,17 +816,16 @@ void Cuatro_3()
     printf("Ingrese el salario de cada trabajador: ");
     for(i=0;i<n;i++)
     {
-        P_trabajador[i]=(struct trabajador*)malloc(sizeof(struct trabajador));
         printf("Ingrese el salario del %i trabajador: ",i+1);
-        scanf("%f",&P_trabajador[i]->salario);
-        if(P_trabajador[i]->salario>mayor)
+        scanf("%f",&(P_trabajador+i)->salario);
+        if((P_trabajador+i)->salario>mayor)
         {
-            mayor=P_trabajador[i]->salario;
+            mayor=(P_trabajador+i)->salario;
             vuelta_1=i;
         }
-         if(P_trabajador[i]->salario<menor)
+         if((P_trabajador+i)->salario<menor)
         {
-            menor=P_trabajador[i]->salario;
+            menor=(P_trabajador+i)->salario;
             vuelta_2=i;
         }
         printf("\n");
@@ -839,21 +834,11 @@ void Cuatro_3()
         system("cls");
         fflush(stdin);
     }
-    printf("Empleado con mas salario\n");
-    while(vuelta_1< j)
-    {
-        fflush(stdin);
-        printf("Empleado # %i: %.2f\n\n",vuelta_1+1,P_trabajador[vuelta_1]->salario);
-        vuelta_1++;
-    }
+    printf("\tEmpleado con mas salario\n");
+    printf("Empleado # %i: %.2f\n\n",vuelta_1+1,(P_trabajador+vuelta_1)->salario);
     getch();
-    printf("Empleado con menor salario\n");
-    while(vuelta_2< j)
-    {
-        fflush(stdin);
-        printf("Empleado # %i: %.2f\n\n",vuelta_2+1,P_trabajador[vuelta_2]->salario);
-        vuelta_2++;
-    }
+    printf("\tEmpleado con menor salario\n");
+    printf("Empleado # %i: %.2f\n\n",vuelta_2+1,(P_trabajador+vuelta_2)->salario);
     printf("\n\n Volver al Menu...");
     getch();
     system("cls");
@@ -876,7 +861,7 @@ struct datosAlumno
     int edad;
     char sexo[10];
     struct Promedio Students_1;
-}*Mi_Estudiante[0];
+}datosAlumno[10],*Mi_Estudiante=datosAlumno;
 
 void Cuatro_4()
 {
@@ -886,29 +871,27 @@ void Cuatro_4()
     printf("\t Registro Estudiantes\n\n");
     for(i=0;i<alumnos;i++)
     {
-        Mi_Estudiante[i]=(struct datosAlumno*)malloc(sizeof(struct datosAlumno));
         fflush(stdin);
         printf("Digite Nombre: ");
-        scanf("%s",&Mi_Estudiante[i]->nombre);
+        fgets((Mi_Estudiante+i)->nombre,30,stdin);
         fflush(stdin);
         printf("Digite la edad: ");
-        scanf("%i",&Mi_Estudiante[i]->edad);
+        scanf("%i",&(Mi_Estudiante+i)->edad);
         fflush(stdin);
         printf("Ingrese sexo: ");
-        scanf("%s",&Mi_Estudiante[i]->sexo);
+        fgets((Mi_Estudiante+i)->sexo,10,stdin);
         fflush(stdin);
         printf("Digite Nota 1: ");
-        scanf("%i",&Mi_Estudiante[i]->Students_1.nota1);
+        scanf("%f",&(Mi_Estudiante+i)->Students_1.nota1);
         fflush(stdin);
         printf("Digite Nota 2: ");
-        scanf("%i",&Mi_Estudiante[i]->Students_1.nota2);
+        scanf("%f",&(Mi_Estudiante+i)->Students_1.nota2);
         fflush(stdin);
         printf("Digite Nota 3: ");
-        scanf("%i",&Mi_Estudiante[i]->Students_1.nota3);
+        scanf("%f",&(Mi_Estudiante+i)->Students_1.nota3);
         fflush(stdin);
-        Mi_Estudiante[i]->Students_1.promedio=(Mi_Estudiante[i]->Students_1.nota1)+ (Mi_Estudiante[i]->Students_1.nota2)+ (Mi_Estudiante[i]->Students_1.nota3)/3;
-        printf("Promedio del Estudiante: %.2f\n\n",Mi_Estudiante[i]->Students_1.promedio);
-        fflush(stdin);
+        (Mi_Estudiante+i)->Students_1.promedio=((Mi_Estudiante+i)->Students_1.nota1 + (Mi_Estudiante+i)->Students_1.nota2 + (Mi_Estudiante+i)->Students_1.nota3)/3;
+        printf("Su promedio es: %.2f\n",(Mi_Estudiante+i)->Students_1.promedio);
         printf("Informacion Almacenada....");
         getch();
         system("cls");
@@ -918,11 +901,11 @@ void Cuatro_4()
     for(i=0;i<alumnos;i++)
     {
         printf("\tAlumno # %i\n\n",i+1);
-        printf("Nombre: %s\n",Mi_Estudiante[i]->nombre);
-        printf("Edad: %i\n",Mi_Estudiante[i]->edad);
-        printf("Sexo: %s\n",Mi_Estudiante[i]->sexo);
-        printf("Nota 1: %.2f\tNota 2: %.2f\tNota 3: %.2f\n",Mi_Estudiante[i].Students_1->nota1,Mi_Estudiante[i].Students_1->nota2,Mi_Estudiante[i].Students_1->nota3);
-        printf("Promedio: %.2f\n",(Mi_Estudiante[i].Students_1->promedio));
+        printf("Nombre: %s\n",(Mi_Estudiante+i)->nombre);
+        printf("Edad: %i\n",(Mi_Estudiante+i)->edad);
+        printf("Sexo: %s\n",(Mi_Estudiante+i)->sexo);
+        printf("Nota 1: %.2f\tNota 2: %.2f\tNota 3: %.2f\n",(Mi_Estudiante+i)->Students_1.nota1, (Mi_Estudiante+i)->Students_1.nota2, (Mi_Estudiante+i)->Students_1.nota3);
+        printf("Promedio: %.2f\n",(Mi_Estudiante+i)->Students_1.promedio);
         printf("\n\nContinuar...");
         getch();
         system("cls");
@@ -943,7 +926,7 @@ struct datosAlumno1
     int grado;
     float promedio;
 
-}*p_estudiante4[0];
+}datosAlumno1[100],*p_estudiante4=datosAlumno1;
 
 void Cuatro_5()
 {
@@ -952,38 +935,40 @@ void Cuatro_5()
     scanf("%i",&n);
 
     printf("\t\tREGISTRO ESTUDIANTES\n\n");
-    for(int i=0;i<n;i++){
-        p_estudiante4[i]=(struct datosAlumno1*)malloc(sizeof(struct datosAlumno1));
-        fflush(stdin);
-        printf("\nDigite Nombre: ");
-        scanf("%s",&p_estudiante4[i]->nombre);
-        fflush(stdin);
-        printf("\nDigite Edad: ");
-        scanf("%d", &p_estudiante4[i]->edad);
-        fflush(stdin);
-        printf("\nDigite Grado: ");
-        scanf("%d", &p_estudiante4[i]->grado);
-        fflush(stdin);
-        printf("\nDigite Promedio: ");
-        scanf("%f", &p_estudiante4[i]->promedio);
-        fflush(stdin);
+    for(int i=0;i<n;i++)
+        {
+            printf("\tEstudiante #%i\n",i+1);
+            fflush(stdin);
+            printf("\nDigite Nombre: ");
+            fgets((p_estudiante4+i)->nombre,30,stdin);
+            fflush(stdin);
+            printf("\nDigite Edad: ");
+            scanf("%d",&(p_estudiante4+i)->edad);
+            fflush(stdin);
+            printf("\nDigite Grado: ");
+            scanf("%d",&(p_estudiante4+i)->grado);
+            fflush(stdin);
+            printf("\nDigite Promedio: ");
+            scanf("%f", &(p_estudiante4+i)->promedio);
+            fflush(stdin);
+            printf("Informacion Almacenada....");
+            getch();
+            system("cls");
     }
 
-    mayor = p_estudiante4[0]->promedio;
-
+    mayor = (p_estudiante4+0)->promedio;
     for (int i=0; i<almn; i++){
-        if (p_estudiante4[i]->promedio > mayor){
-            mayor = p_estudiante4[i]->promedio;
+        if ((p_estudiante4+i)->promedio > mayor)
+            {
+            mayor = (p_estudiante4+i)->promedio;
             x = i;
         }
     }
-
     printf("\n\n\t\tMEJOR PROMEDIO\n\n");
-    printf("\nLos datos del estudiande con mayor promedio son: \n");
-    printf("\nNombre: %s", p_estudiante4[x]->nombre);
-    printf("\nEdad: %d", p_estudiante4[x]->edad);
-    printf("\nGrado: %d", p_estudiante4[x]->grado);
-    printf("\nPromedio: %f",p_estudiante4[x]->promedio);
+    printf("\nNombre: %s",(p_estudiante4+x)->nombre);
+    printf("\nEdad: %d", (p_estudiante4+x)->edad);
+    printf("\nGrado: %d",(p_estudiante4+x)->grado);
+    printf("\nPromedio: %.2f\n\n",(p_estudiante4+x)->promedio);
     printf("\n\n");
     delete[](p_estudiante4);
    printf("\nVolver al Menu...");
